@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Chalkboard sign: POHA / IDLI / CHAI menu board -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="72dp"
+    android:height="72dp"
+    android:viewportWidth="72"
+    android:viewportHeight="72">
+    <!-- board frame -->
+    <path android:fillColor="#123B2A"
+        android:pathData="M10,8 L62,8 A4,4 0 0,1 66,12 L66,52 A4,4 0 0,1 62,56 L10,56 A4,4 0 0,1 6,52 L6,12 A4,4 0 0,1 10,8 Z" />
+    <!-- inner chalk surface -->
+    <path android:fillColor="#1C4D38"
+        android:pathData="M12,12 L60,12 A2,2 0 0,1 62,14 L62,50 A2,2 0 0,1 60,52 L12,52 A2,2 0 0,1 10,50 L10,14 A2,2 0 0,1 12,12 Z" />
+    <!-- legs -->
+    <path android:strokeColor="#8A5A2B" android:strokeWidth="4" android:strokeLineCap="round"
+        android:pathData="M20,56 L16,68 M52,56 L56,68" />
+    <!-- chalk lines: POHA / IDLI / CHAI -->
+    <path android:strokeColor="#F3F7EF" android:strokeWidth="3" android:strokeLineCap="round"
+        android:pathData="M18,21 L50,21" />
+    <path android:strokeColor="#F3F7EF" android:strokeWidth="3" android:strokeLineCap="round"
+        android:pathData="M18,31 L44,31" />
+    <path android:strokeColor="#C9E86F" android:strokeWidth="3" android:strokeLineCap="round"
+        android:pathData="M18,41 L40,41" />
+</vector>

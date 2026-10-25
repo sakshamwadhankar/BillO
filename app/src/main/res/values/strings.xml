@@ -9,6 +9,11 @@
     <string name="nav_intel">Intel</string>
     <string name="nav_sync">Sync</string>
     <string name="nav_eval">Eval</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_entries">Entries</string>
+    <string name="nav_stock">Stock</string>
+    <string name="nav_people">People</string>
+    <string name="nav_summary">Summary</string>
 
     <!-- Evidence -->
     <string name="evidence_title">Evidence inbox</string>
@@ -125,4 +130,61 @@
     <string name="importing">Importing…</string>
     <string name="grant_mic">Grant microphone access</string>
     <string name="error_prefix">error: %1$s</string>
+
+    <!-- Mockup UI: home -->
+    <string name="app_tagline">Your shop. Your hisaab.</string>
+    <string name="greeting">Namaste, Ramu bhai!</string>
+    <string name="shop_name">Ramu\u2019s Poha Stall</string>
+    <string name="offline_ready">Offline ready</string>
+    <string name="todays_sales">Today\u2019s sales</string>
+    <string name="from_items">from %1$d items</string>
+    <string name="add_what_happened">Add what happened</string>
+    <string name="speak_type_photo">Speak, type or take a photo</string>
+    <string name="quick_actions">Quick actions</string>
+    <string name="see_all">See all →</string>
+    <string name="qa_sold">Sold something</string>
+    <string name="qa_bought">Bought stock</string>
+    <string name="qa_paid">Customer paid</string>
+    <string name="qa_missing">Stock is missing</string>
+    <string name="todays_summary">Today\u2019s summary</string>
+    <string name="money_in">Money in</string>
+    <string name="money_out">Money out</string>
+    <string name="no_entries_today">Nothing recorded yet today — tap “Add what happened”.</string>
+
+    <!-- Mockup UI: capture -->
+    <string name="what_happened">What happened?</string>
+    <string name="choose_speak">Choose or speak in your own words</string>
+    <string name="intent_sold">I sold something</string>
+    <string name="intent_sold_eg">e.g. 2 plate poha, 1 chai</string>
+    <string name="intent_bought">I bought stock</string>
+    <string name="intent_bought_eg">e.g. 3 kilo tamatar</string>
+    <string name="intent_owe">Someone owes me / paid me</string>
+    <string name="intent_owe_eg">e.g. Sharma ji ne 417 diya</string>
+    <string name="tap_and_speak">Tap and speak</string>
+    <string name="own_words">You can speak in your own words (even mixed Hindi, Marathi or English)</string>
+    <string name="detected_text">Detected text</string>
+    <string name="detected_hint">Type or edit what happened…</string>
+    <string name="save_entry">Save entry</string>
+
+    <!-- Mockup UI: people -->
+    <string name="people_screen_title">People who owe you</string>
+    <string name="from_customers">%1$s from %2$d customers</string>
+    <string name="no_debtors">No one owes you right now. Credit recorded by voice lands here.</string>
+
+    <!-- Mockup UI: summary -->
+    <string name="summary_title">Your shop today</string>
+    <string name="saved_offline">Saved on this phone • Offline ready</string>
+    <string name="summary_subtitle">Simple summary of your business</string>
+    <string name="sales_in">Sales (Money in)</string>
+    <string name="expenses_out">Expenses (Money out)</string>
+    <string name="items_count">%1$d items</string>
+    <string name="entries_count">%1$d entries</string>
+    <string name="about_left">About %1$s left</string>
+    <string name="estimate_note">Estimate based on what you recorded</string>
+    <string name="other_things">Other important things</string>
+    <string name="recent_activity">Recent activity</string>
+    <string name="advanced">Advanced tools</string>
+    <string name="sync_card">Sync &amp; backup (Bluetooth CRDT)</string>
+    <string name="eval_card">Run the 13-check evaluation</string>
+    <string name="running_low">running low</string>
 </resources>

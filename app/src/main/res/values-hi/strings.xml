@@ -9,6 +9,11 @@
     <string name="nav_intel">बुद्धि</string>
     <string name="nav_sync">सिंक</string>
     <string name="nav_eval">मूल्यांकन</string>
+    <string name="nav_home">होम</string>
+    <string name="nav_entries">एंट्री</string>
+    <string name="nav_stock">स्टॉक</string>
+    <string name="nav_people">लोग</string>
+    <string name="nav_summary">सारांश</string>
 
     <!-- Evidence -->
     <string name="evidence_title">सबूत इनबॉक्स</string>
@@ -125,4 +130,61 @@
     <string name="importing">आयात हो रहा है…</string>
     <string name="grant_mic">माइक्रोफ़ोन अनुमति दें</string>
     <string name="error_prefix">त्रुटि: %1$s</string>
+
+    <!-- Mockup UI: home -->
+    <string name="app_tagline">आपकी दुकान। आपका हिसाब।</string>
+    <string name="greeting">नमस्ते, रामू भाई!</string>
+    <string name="shop_name">रामू की पोहा टपरी</string>
+    <string name="offline_ready">ऑफलाइन तैयार</string>
+    <string name="todays_sales">आज की बिक्री</string>
+    <string name="from_items">%1$d आइटम से</string>
+    <string name="add_what_happened">जो हुआ वो जोड़ें</string>
+    <string name="speak_type_photo">बोलें, लिखें या फोटो लें</string>
+    <string name="quick_actions">क्विक एक्शन</string>
+    <string name="see_all">सभी देखें →</string>
+    <string name="qa_sold">कुछ बेचा</string>
+    <string name="qa_bought">सामान खरीदा</string>
+    <string name="qa_paid">ग्राहक ने दिया</string>
+    <string name="qa_missing">सामान कमी है</string>
+    <string name="todays_summary">आज का सार</string>
+    <string name="money_in">आय</string>
+    <string name="money_out">व्यय</string>
+    <string name="no_entries_today">आज अभी कुछ दर्ज नहीं — “जो हुआ वो जोड़ें” दबाएँ।</string>
+
+    <!-- Mockup UI: capture -->
+    <string name="what_happened">क्या हुआ?</string>
+    <string name="choose_speak">चुनें या अपने शब्दों में बोलें</string>
+    <string name="intent_sold">मैंने कुछ बेचा</string>
+    <string name="intent_sold_eg">जैसे 2 प्लेट पोहा, 1 चाय</string>
+    <string name="intent_bought">मैंने सामान खरीदा</string>
+    <string name="intent_bought_eg">जैसे 3 किलो टमाटर</string>
+    <string name="intent_owe">कोई मुझे देनदार है / चुकाया</string>
+    <string name="intent_owe_eg">जैसे शर्मा जी ने 417 दिया</string>
+    <string name="tap_and_speak">टैप करके बोलें</string>
+    <string name="own_words">अपने शब्दों में बोलें (मिश्रित हिंदी, मराठी या अंग्रेज़ी भी)</string>
+    <string name="detected_text">पहचाना गया टेक्स्ट</string>
+    <string name="detected_hint">जो हुआ वो लिखें या सुधारें…</string>
+    <string name="save_entry">प्रविष्टि सेव करें</string>
+
+    <!-- Mockup UI: people -->
+    <string name="people_screen_title">जो आपको देनदार हैं</string>
+    <string name="from_customers">%2$d ग्राहकों से %1$s</string>
+    <string name="no_debtors">अभी कोई देनदार नहीं। आवाज़ से दर्ज उधार यहीं आता है।</string>
+
+    <!-- Mockup UI: summary -->
+    <string name="summary_title">आपकी दुकान आज</string>
+    <string name="saved_offline">इस फोन पर सेव • ऑफलाइन तैयार</string>
+    <string name="summary_subtitle">आपके व्यापार का सरल सार</string>
+    <string name="sales_in">बिक्री (आय)</string>
+    <string name="expenses_out">खर्च (व्यय)</string>
+    <string name="items_count">%1$d आइटम</string>
+    <string name="entries_count">%1$d प्रविष्टियाँ</string>
+    <string name="about_left">लगभग %1$s बचे</string>
+    <string name="estimate_note">आपके दर्ज किए आँकड़ों पर आधारित अनुमान</string>
+    <string name="other_things">अन्य महत्वपूर्ण बातें</string>
+    <string name="recent_activity">हाल की गतिविधि</string>
+    <string name="advanced">उन्नत टूल</string>
+    <string name="sync_card">सिंक और बैकअप (ब्लूटूथ CRDT)</string>
+    <string name="eval_card">13-जाँच मूल्यांकन चलाएँ</string>
+    <string name="running_low">कमी हो रही है</string>
 </resources>

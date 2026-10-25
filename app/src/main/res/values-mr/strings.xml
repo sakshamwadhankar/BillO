@@ -9,6 +9,11 @@
     <string name="nav_intel">बुद्धि</string>
     <string name="nav_sync">सिंक</string>
     <string name="nav_eval">मूल्यमापन</string>
+    <string name="nav_home">होम</string>
+    <string name="nav_entries">नोंदी</string>
+    <string name="nav_stock">साठा</string>
+    <string name="nav_people">लोक</string>
+    <string name="nav_summary">सारांश</string>
 
     <!-- Evidence -->
     <string name="evidence_title">पुरावा इनबॉक्स</string>
@@ -125,4 +130,61 @@
     <string name="importing">आयात सुरू…</string>
     <string name="grant_mic">मायक्रोफोन परवानगी द्या</string>
     <string name="error_prefix">त्रुटी: %1$s</string>
+
+    <!-- Mockup UI: home -->
+    <string name="app_tagline">तुमचे दुकान. तुमचे हिशोब.</string>
+    <string name="greeting">नमस्कार, रामू भाऊ!</string>
+    <string name="shop_name">रामूचा पोहा टपरी</string>
+    <string name="offline_ready">ऑफलाइन तयार</string>
+    <string name="todays_sales">आजची विक्री</string>
+    <string name="from_items">%1$d वस्तूंतून</string>
+    <string name="add_what_happened">जे घडलं ते जोडा</string>
+    <string name="speak_type_photo">बोला, लिहा किंवा फोटो घ्या</string>
+    <string name="quick_actions">झटपट कृती</string>
+    <string name="see_all">सर्व पहा →</string>
+    <string name="qa_sold">काही विकलं</string>
+    <string name="qa_bought">माल खरेदी केला</string>
+    <string name="qa_paid">ग्राहकाने दिलं</string>
+    <string name="qa_missing">माल कमी आहे</string>
+    <string name="todays_summary">आजचा सारांश</string>
+    <string name="money_in">आलं</string>
+    <string name="money_out">गेलं</string>
+    <string name="no_entries_today">आज अजून काही नोंदवलं नाही — “जे घडलं ते जोडा” दाबा.</string>
+
+    <!-- Mockup UI: capture -->
+    <string name="what_happened">काय घडलं?</string>
+    <string name="choose_speak">निवडा किंवा स्वतःच्या शब्दांत बोला</string>
+    <string name="intent_sold">मी काही विकलं</string>
+    <string name="intent_sold_eg">उदा. २ प्लेट पोहा, १ चहा</string>
+    <string name="intent_bought">मी माल खरेदी केला</string>
+    <string name="intent_bought_eg">उदा. ३ किलो टोमॅटो</string>
+    <string name="intent_owe">कोणी मला देय आहे / फेडलं</string>
+    <string name="intent_owe_eg">उदा. शर्मा जींनी ४१७ दिलं</string>
+    <string name="tap_and_speak">टॅप करून बोला</string>
+    <string name="own_words">स्वतःच्या शब्दांत बोला (मिश्रित हिंदी, मराठी किंवा इंग्रजी पण)</string>
+    <string name="detected_text">ओळखलेला मजकूर</string>
+    <string name="detected_hint">जे घडलं ते लिहा किंवा दुरुस्त करा…</string>
+    <string name="save_entry">नोंद जतन करा</string>
+
+    <!-- Mockup UI: people -->
+    <string name="people_screen_title">जे तुम्हाला देय आहेत</string>
+    <string name="from_customers">%2$d ग्राहकांकडून %1$s</string>
+    <string name="no_debtors">सध्या कोणी देय नाही. आवाजाने नोंदवलेली उधारी इथे येते.</string>
+
+    <!-- Mockup UI: summary -->
+    <string name="summary_title">तुमचे दुकान आज</string>
+    <string name="saved_offline">या फोनवर जतन • ऑफलाइन तयार</string>
+    <string name="summary_subtitle">तुमच्या व्यवसायाचा सोपा सारांश</string>
+    <string name="sales_in">विक्री (आलं)</string>
+    <string name="expenses_out">खर्च (गेलं)</string>
+    <string name="items_count">%1$d वस्तू</string>
+    <string name="entries_count">%1$d नोंदी</string>
+    <string name="about_left">जवळपास %1$s शिल्लक</string>
+    <string name="estimate_note">नोंदवलेल्या माहितीवर आधारित अंदाज</string>
+    <string name="other_things">इतर महत्त्वाच्या गोष्टी</string>
+    <string name="recent_activity">अलीकडील हालचाल</string>
+    <string name="advanced">प्रगत साधने</string>
+    <string name="sync_card">सिंक व बॅकअप (ब्लूटूथ CRDT)</string>
+    <string name="eval_card">१३-तपासणी मूल्यमापन चालवा</string>
+    <string name="running_low">कमी होत आहे</string>
 </resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- BillO cat mascot: black head with ears, white eyes and grin -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <!-- ears -->
+    <path android:fillColor="#10291D" android:pathData="M10,18 L6,5 L19,12 Z" />
+    <path android:fillColor="#10291D" android:pathData="M38,18 L42,5 L29,12 Z" />
+    <!-- head -->
+    <path android:fillColor="#10291D"
+        android:pathData="M24,10 C33,10 41,16 41,25 C41,34 33,40 24,40 C15,40 7,34 7,25 C7,16 15,10 24,10 Z" />
+    <!-- eyes -->
+    <path android:fillColor="#FFFFFF" android:pathData="M16,22 a2.6,3 0 1,0 5.2,0 a2.6,3 0 1,0 -5.2,0 Z" />
+    <path android:fillColor="#FFFFFF" android:pathData="M26.8,22 a2.6,3 0 1,0 5.2,0 a2.6,3 0 1,0 -5.2,0 Z" />
+    <path android:fillColor="#10291D" android:pathData="M18,22 a1.1,1.3 0 1,0 2.2,0 a1.1,1.3 0 1,0 -2.2,0 Z" />
+    <path android:fillColor="#10291D" android:pathData="M28.8,22 a1.1,1.3 0 1,0 2.2,0 a1.1,1.3 0 1,0 -2.2,0 Z" />
+    <!-- grin -->
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="1.8" android:strokeLineCap="round"
+        android:pathData="M18,30 Q24,34 30,30" />
+    <!-- whiskers -->
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="1.2" android:strokeLineCap="round"
+        android:pathData="M6,26 L12,27 M6,30 L12,30" />
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="1.2" android:strokeLineCap="round"
+        android:pathData="M42,26 L36,27 M42,30 L36,30" />
+</vector>
