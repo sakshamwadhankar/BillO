@@ -65,17 +65,16 @@ object OpsCodec {
     fun encodeEntry(p: EntryPayload): String {
         val arr = JSONArray()
         p.lines.forEach { l ->
-            arr.put(
-                JSONObject()
-                    .put("account", l.account)
-                    .put("type", l.type.name)
-                    .put("parent", l.parentName ?: "")
-                    .put("debit", l.debitPaise)
-                    .put("credit", l.creditPaise)
-                    .put("dist", l.distJson ?: "")
-                    .put("qty", l.qty ?: Double.NaN)
-                    .put("unit", l.unit ?: ""),
-            )
+            val lo = JSONObject()
+                .put("account", l.account)
+                .put("type", l.type.name)
+                .put("parent", l.parentName ?: "")
+                .put("debit", l.debitPaise)
+                .put("credit", l.creditPaise)
+                .put("dist", l.distJson ?: "")
+                .put("unit", l.unit ?: "")
+            lo.put("qty", if (l.qty != null) l.qty else JSONObject.NULL)
+            arr.put(lo)
         }
         return JSONObject()
             .put("uuid", p.uuid)

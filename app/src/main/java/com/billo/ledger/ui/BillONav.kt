@@ -2,9 +2,12 @@ package com.billo.ledger.ui
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FactCheck
+import androidx.compose.material.icons.filled.Insights
 import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.ReceiptLong
+import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -18,13 +21,18 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.billo.ledger.ui.screens.CaptureScreen
+import com.billo.ledger.ui.screens.EvalScreen
 import com.billo.ledger.ui.screens.EvidenceScreen
+import com.billo.ledger.ui.screens.IntelligenceScreen
 import com.billo.ledger.ui.screens.LedgerScreen
+import com.billo.ledger.ui.screens.SyncScreen
 
 private val TABS = listOf(
     Triple("evidence", "Evidence", Icons.Filled.ReceiptLong),
     Triple("ledger", "Ledger", Icons.Filled.MenuBook),
-    Triple("capture", "Capture", Icons.Filled.Mic),
+    Triple("intel", "Intel", Icons.Filled.Insights),
+    Triple("sync", "Sync", Icons.Filled.Sync),
+    Triple("eval", "Eval", Icons.Filled.FactCheck),
 )
 
 @Composable
@@ -56,8 +64,11 @@ fun BillONav() {
             startDestination = "evidence",
             modifier = Modifier.padding(padding),
         ) {
-            composable("evidence") { EvidenceScreen() }
+            composable("evidence") { EvidenceScreen(onCapture = { nav.navigate("capture") { launchSingleTop = true } }) }
             composable("ledger") { LedgerScreen() }
+            composable("intel") { IntelligenceScreen() }
+            composable("sync") { SyncScreen() }
+            composable("eval") { EvalScreen() }
             composable("capture") { CaptureScreen() }
         }
     }

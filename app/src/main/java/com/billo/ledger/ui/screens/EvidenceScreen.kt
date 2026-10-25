@@ -14,16 +14,22 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DeleteSweep
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,6 +37,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.billo.ledger.BillOApplication
+import com.billo.ledger.core.FusionEngine
+import com.billo.ledger.core.FusionReport
 import com.billo.ledger.data.db.EvidenceChannel
 import com.billo.ledger.data.db.EvidenceEntity
 import com.billo.ledger.ui.formatWallTime
@@ -45,17 +53,19 @@ private fun channelColor(channel: EvidenceChannel): Color = when (channel) {
 }
 
 @Composable
-fun EvidenceScreen() {
+fun EvidenceScreen(onCapture: () -> Unit = {}) {
     val app = LocalContext.current.applicationContext as BillOApplication
     val evidence by app.evidence.all().collectAsState(initial = emptyList())
     val scope = rememberCoroutineScope()
+    var fusionReport by remember { mutableStateOf<FusionReport?>(null) }
+    var fusing by remember { mutableStateOf(false) }
 
     Column(Modifier.fillMaxSize().padding(16.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
                 Text("Evidence inbox", style = MaterialTheme.typography.headlineSmall)
                 Text(
-                    "Raw multi-channel input — fused into entries in Phase 3",
+                    "Raw multi-channel input — fused into double entries",
                     style = MaterialTheme.typography.bodySmall,
                 )
             }
@@ -65,10 +75,45 @@ fun EvidenceScreen() {
         }
         Spacer(Modifier.height(8.dp))
 
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Button(
+                enabled = !fusing,
+                onClick = {
+                    scope.launch {
+                        fusing = true
+                        try {
+                            fusionReport = FusionEngine(app.database, app.ledger, app.evidence).run()
+                        } finally {
+                            fusing = false
+                        }
+                    }
+                },
+            ) { Text(if (fusing) "Fusing…" else "Run fusion") }
+            OutlinedButton(onClick = onCapture) { Text("Capture…") }
+        }
+
+        fusionReport?.let { r ->
+            Card(Modifier.fillMaxWidth().padding(top = 8.dp)) {
+                Column(Modifier.padding(12.dp)) {
+                    Text(
+                        "posted ${r.posted} · pending ${r.pendingPartial} · conflicts ${r.conflicts} · " +
+                            "lexicon drops ${r.lexiconDrops} · duplicates ${r.duplicateSkips}",
+                        style = MaterialTheme.typography.bodySmall,
+                        fontWeight = FontWeight.Medium,
+                    )
+                    r.notes.take(4).forEach { note ->
+                        Text(note, style = MaterialTheme.typography.labelSmall)
+                    }
+                }
+            }
+        }
+
+        Spacer(Modifier.height(8.dp))
+
         if (evidence.isEmpty()) {
             Text(
-                "No evidence yet.\nUse the Capture tab: speak Hinglish, snap a slip, " +
-                    "or let an SMS chime in — everything lands here first.",
+                "No evidence yet.\nSpeak Hinglish, snap a slip, or let an SMS chime in — " +
+                    "everything lands here first, then fusion reconciles it into the ledger.",
                 style = MaterialTheme.typography.bodyMedium,
             )
         } else {
@@ -101,6 +146,12 @@ private fun EvidenceCard(evidence: EvidenceEntity) {
                 Text(
                     formatWallTime(evidence.wallTimeMillis),
                     style = MaterialTheme.typography.labelSmall,
+                )
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    "conf ${(evidence.confidence * 100).toInt()}%",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.secondary,
                 )
             }
             Spacer(Modifier.height(6.dp))

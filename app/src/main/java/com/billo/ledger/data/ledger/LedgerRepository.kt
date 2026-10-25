@@ -170,7 +170,7 @@ class LedgerRepository(
             wallTimeMillis = System.currentTimeMillis(),
             monoTimeMillis = SystemClock.elapsedRealtime(),
             sourceEvidenceId = request.sourceEvidenceId,
-            uuid = UUID.randomUUID().toString(),
+            uuid = request.uuid ?: UUID.randomUUID().toString(),
             kind = request.kind,
             confidence = request.confidence.coerceIn(0.0, 1.0),
             nodeId = nodeId,
@@ -306,6 +306,21 @@ class LedgerRepository(
     suspend fun accountBalancePaise(name: String): Long =
         balances().firstOrNull { it.account.name == name }?.paise ?: 0
 
+    /**
+     * The double-entry invariant: Assets + Expenses = Liabilities + Equity + Income
+     * (equivalently, Σ(debits) = Σ(credits) across every posted line).
+     */
+    suspend fun isBalanced(): Boolean {
+        val bs = balances()
+        val debitNormal = bs
+            .filter { it.account.type == AccountType.ASSET || it.account.type == AccountType.EXPENSE }
+            .sumOf { it.paise }
+        val creditNormal = bs
+            .filter { it.account.type != AccountType.ASSET && it.account.type != AccountType.EXPENSE }
+            .sumOf { it.paise }
+        return debitNormal == creditNormal
+    }
+
     /** The PS demo scenario: opening capital, a wholesale slip, and Sharma ji's credit. */
     suspend fun postDemoScenario() {
         ensureSeeded()
@@ -350,4 +365,6 @@ data class PostRequest(
     val sourceEvidenceId: Long? = null,
     val kind: EntryKind = EntryKind.NORMAL,
     val confidence: Double = 1.0,
+    /** Deterministic uuid → idempotent posting (CRDT re-apply safety). */
+    val uuid: String? = null,
 )

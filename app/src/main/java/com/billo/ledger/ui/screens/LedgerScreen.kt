@@ -124,17 +124,26 @@ private fun JournalCard(item: com.billo.ledger.data.db.EntryWithLines) {
             Text(item.entry.description, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
             Text(
                 formatWallTime(item.entry.wallTimeMillis) +
-                    "  ·  mono ${item.entry.monoTimeMillis / 1000}s",
+                    "  ·  ${item.entry.nodeId.take(8)}" +
+                    if (item.entry.confidence < 1.0) "  ·  conf ${(item.entry.confidence * 100).toInt()}%" else "",
                 style = MaterialTheme.typography.labelSmall,
             )
             Spacer(Modifier.height(4.dp))
             item.lines.forEach { line ->
                 Row(Modifier.fillMaxWidth().padding(vertical = 1.dp)) {
-                    Text(
-                        line.accountName,
-                        style = MaterialTheme.typography.bodySmall,
-                        modifier = Modifier.weight(1f),
-                    )
+                    Column(Modifier.weight(1f)) {
+                        Text(
+                            line.accountName,
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                        com.billo.ledger.core.DistCodec.decode(line.distJson)?.let { s ->
+                            Text(
+                                "90%% CI ₹%.0f–₹%.0f".format(s.p5 / 100, s.p95 / 100),
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.secondary,
+                            )
+                        }
+                    }
                     if (line.debitPaise > 0) {
                         Text("Dr ${formatRupees(line.debitPaise)}", style = MaterialTheme.typography.bodySmall)
                     } else {
@@ -152,13 +161,20 @@ private fun JournalCard(item: com.billo.ledger.data.db.EntryWithLines) {
 
 @Composable
 private fun BalanceList(balances: List<Balance>) {
-    val signedSum = balances.sumOf { it.paise }
+    val debitNormal = balances
+        .filter { it.account.type == com.billo.ledger.data.db.AccountType.ASSET || it.account.type == com.billo.ledger.data.db.AccountType.EXPENSE }
+        .sumOf { it.paise }
+    val creditNormal = balances
+        .filter { it.account.type != com.billo.ledger.data.db.AccountType.ASSET && it.account.type != com.billo.ledger.data.db.AccountType.EXPENSE }
+        .sumOf { it.paise }
+    val balanced = debitNormal == creditNormal && balances.isNotEmpty()
     Column(Modifier.fillMaxSize().padding(16.dp)) {
-        if (signedSum == 0L && balances.isNotEmpty()) {
+        if (balances.isNotEmpty()) {
             Text(
-                "Σ signed balances = ₹0.00 — ledger balanced ✓",
+                if (balanced) "Assets+Expenses ₹${debitNormal / 100} = Liab+Equity+Income ₹${creditNormal / 100} — balanced ✓"
+                else "UNBALANCED: A+E ₹${debitNormal / 100} ≠ L+Eq+I ₹${creditNormal / 100}",
                 style = MaterialTheme.typography.labelMedium,
-                color = Color(0xFF26A69A),
+                color = if (balanced) Color(0xFF26A69A) else Color(0xFFE57373),
                 fontWeight = FontWeight.SemiBold,
             )
             Spacer(Modifier.height(8.dp))
