@@ -11,13 +11,22 @@ import androidx.room.RoomDatabase
         JournalEntryEntity::class,
         JournalLineEntity::class,
         EvidenceEntity::class,
+        LexiconEntity::class,
+        InventoryItemEntity::class,
+        StockMoveEntity::class,
+        LedgerOpEntity::class,
+        SyncConflictEntity::class,
     ],
-    version = 1,
+    version = 2,
     exportSchema = false,
 )
 abstract class BillODatabase : RoomDatabase() {
     abstract fun ledgerDao(): LedgerDao
     abstract fun evidenceDao(): EvidenceDao
+    abstract fun lexiconDao(): LexiconDao
+    abstract fun inventoryDao(): InventoryDao
+    abstract fun opLogDao(): OpLogDao
+    abstract fun syncConflictDao(): SyncConflictDao
 
     companion object {
         @Volatile

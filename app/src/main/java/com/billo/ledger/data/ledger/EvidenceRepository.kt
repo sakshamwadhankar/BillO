@@ -19,6 +19,7 @@ class EvidenceRepository(private val dao: EvidenceDao) {
         channel: EvidenceChannel,
         text: String,
         imageUri: String? = null,
+        confidence: Double = 1.0,
     ): Long {
         val trimmed = text.trim()
         if (trimmed.isEmpty()) return -1
@@ -29,6 +30,7 @@ class EvidenceRepository(private val dao: EvidenceDao) {
             wallTimeMillis = System.currentTimeMillis(),
             monoTimeMillis = SystemClock.elapsedRealtime(),
             parsedHint = EvidenceHints.summarize(trimmed),
+            confidence = confidence.coerceIn(0.0, 1.0),
         )
         return dao.insert(entity)
     }
