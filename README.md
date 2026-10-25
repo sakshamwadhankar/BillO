@@ -1,8 +1,3 @@
-<p align="center">
-  <img src="app/src/main/res/drawable/ic_launcher_foreground.xml" width="0" alt="">
-  <img src="docs/screenshots/icon.png" width="0" alt="">
-</p>
-
 # BillO — the invisible worker's ledger
 
 **A fully offline, on-device probabilistic ledger engine for street vendors.** BillO passively accepts chaotic, contradictory evidence — a crumpled, oil-stained wholesale slip plus ambient Hinglish speech under 85 dB traffic noise ("Bhai 3 kilo tamatar liya 180 mein… Sharma ji ka 40 jama kar, aur 7 plate poha de") plus delayed SMS chimes and handwritten tallies — and reconstructs a **double-entry ledger** from that chaos, outputting **ranges and confidence intervals**, never blind point guesses.
