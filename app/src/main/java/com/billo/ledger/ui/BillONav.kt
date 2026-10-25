@@ -16,10 +16,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.billo.ledger.R
 import com.billo.ledger.ui.screens.CaptureScreen
 import com.billo.ledger.ui.screens.EvalScreen
 import com.billo.ledger.ui.screens.EvidenceScreen
@@ -28,11 +30,11 @@ import com.billo.ledger.ui.screens.LedgerScreen
 import com.billo.ledger.ui.screens.SyncScreen
 
 private val TABS = listOf(
-    Triple("evidence", "Evidence", Icons.Filled.ReceiptLong),
-    Triple("ledger", "Ledger", Icons.Filled.MenuBook),
-    Triple("intel", "Intel", Icons.Filled.Insights),
-    Triple("sync", "Sync", Icons.Filled.Sync),
-    Triple("eval", "Eval", Icons.Filled.FactCheck),
+    Triple("evidence", R.string.nav_evidence, Icons.Filled.ReceiptLong),
+    Triple("ledger", R.string.nav_ledger, Icons.Filled.MenuBook),
+    Triple("intel", R.string.nav_intel, Icons.Filled.Insights),
+    Triple("sync", R.string.nav_sync, Icons.Filled.Sync),
+    Triple("eval", R.string.nav_eval, Icons.Filled.FactCheck),
 )
 
 @Composable
@@ -44,7 +46,8 @@ fun BillONav() {
     Scaffold(
         bottomBar = {
             NavigationBar {
-                TABS.forEach { (route, label, icon) ->
+                TABS.forEach { (route, labelRes, icon) ->
+                    val label = stringResource(labelRes)
                     NavigationBarItem(
                         selected = currentRoute == route,
                         onClick = {

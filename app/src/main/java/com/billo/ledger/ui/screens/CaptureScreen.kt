@@ -41,10 +41,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import com.billo.ledger.BillOApplication
+import com.billo.ledger.R
 import com.billo.ledger.data.db.EvidenceChannel
 import com.billo.ledger.perception.ocr.SlipOcr
 import com.billo.ledger.perception.sms.SmsInboxReader
@@ -77,7 +79,8 @@ fun CaptureScreen() {
     val context = LocalContext.current
     val app = context.applicationContext as BillOApplication
     val scope = rememberCoroutineScope()
-    var status by remember { mutableStateOf("All processing is on-device — no internet permission exists in this app.") }
+    val defaultStatus = stringResource(R.string.capture_status)
+    var status by remember { mutableStateOf<String?>(null) }
 
     var micGranted by remember { mutableStateOf(false) }
     var camGranted by remember { mutableStateOf(false) }
@@ -149,25 +152,24 @@ fun CaptureScreen() {
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Text("Capture evidence", style = MaterialTheme.typography.headlineSmall)
-        Text(status, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
+        Text(stringResource(R.string.capture_title), style = MaterialTheme.typography.headlineSmall)
+        Text(status ?: defaultStatus, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
 
         // ---------------- noise gate ----------------
         Card(Modifier.fillMaxWidth()) {
             Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                Text("Ambient noise gate", style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(R.string.noise_title), style = MaterialTheme.typography.titleSmall)
                 Text(
-                    "Weights voice evidence: at ${NoiseMonitor.GATE_DBFS} dBFS and above, " +
-                        "speech is considered drowned by traffic (the 85dB case).",
+                    stringResource(R.string.noise_desc, NoiseMonitor.GATE_DBFS),
                     style = MaterialTheme.typography.bodySmall,
                 )
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     if (noise.isRunning) {
-                        OutlinedButton(onClick = { noise.stop() }) { Text("Stop meter") }
+                        OutlinedButton(onClick = { noise.stop() }) { Text(stringResource(R.string.stop_meter)) }
                     } else {
                         Button(onClick = {
                             if (micGranted) noise.start() else permLauncher.launch(arrayOf(Manifest.permission.RECORD_AUDIO))
-                        }) { Text("Start meter") }
+                        }) { Text(stringResource(R.string.start_meter)) }
                     }
                 }
                 level?.let { l ->
@@ -177,7 +179,7 @@ fun CaptureScreen() {
                         color = if (l.tooNoisy) Color(0xFFE57373) else MaterialTheme.colorScheme.primary,
                     )
                     Text(
-                        "${l.dbfs} dBFS — " + if (l.tooNoisy) "TOO NOISY: voice evidence will be down-weighted" else "clear enough for speech",
+                        "${l.dbfs} dBFS — " + if (l.tooNoisy) stringResource(R.string.too_noisy) else stringResource(R.string.clear_enough),
                         style = MaterialTheme.typography.bodySmall,
                     )
                 }
@@ -187,24 +189,22 @@ fun CaptureScreen() {
         // ---------------- offline STT ----------------
         Card(Modifier.fillMaxWidth()) {
             Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                Text("Offline Hindi speech (Vosk, on-device)", style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(R.string.stt_title), style = MaterialTheme.typography.titleSmall)
                 when (val s = sttState) {
                     is SttState.Listening -> {
-                        Text("listening…", style = MaterialTheme.typography.labelMedium)
+                        Text(stringResource(R.string.listening), style = MaterialTheme.typography.labelMedium)
                         Text(s.partial.ifEmpty { "…" }, style = MaterialTheme.typography.bodyMedium)
                     }
-                    is SttState.Final -> Text("heard: \"${s.text}\"", style = MaterialTheme.typography.bodyMedium)
-                    is SttState.Error -> Text("error: ${s.message}", color = Color(0xFFE57373), style = MaterialTheme.typography.bodySmall)
+                    is SttState.Final -> Text(stringResource(R.string.heard, s.text), style = MaterialTheme.typography.bodyMedium)
+                    is SttState.Error -> Text(stringResource(R.string.error_prefix, s.message), color = Color(0xFFE57373), style = MaterialTheme.typography.bodySmall)
                     is SttState.ModelMissing -> {
                         Text(
-                            "Vosk model not installed. One-time online setup: download " +
-                                "vosk-model-small-hi-0.22 from alphacephei.com/vosk/models on a " +
-                                "connected machine and extract it to:",
+                            stringResource(R.string.model_missing),
                             style = MaterialTheme.typography.bodySmall,
                         )
                         Text(stt.modelDir().absolutePath, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
                         Text(
-                            "After that, recognition is permanently offline.",
+                            stringResource(R.string.model_missing_after),
                             style = MaterialTheme.typography.bodySmall,
                         )
                     }
@@ -213,9 +213,9 @@ fun CaptureScreen() {
                 }
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     if (sttState is SttState.Listening) {
-                        OutlinedButton(onClick = { stt.stop() }) { Text("Stop listening") }
+                        OutlinedButton(onClick = { stt.stop() }) { Text(stringResource(R.string.stop_listening)) }
                     } else {
-                        Button(onClick = { stt.start() }) { Text("Start listening") }
+                        Button(onClick = { stt.start() }) { Text(stringResource(R.string.start_listening)) }
                     }
                 }
             }
@@ -224,10 +224,9 @@ fun CaptureScreen() {
         // ---------------- OCR ----------------
         Card(Modifier.fillMaxWidth()) {
             Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                Text("Slip / tally OCR (ML Kit, on-device)", style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(R.string.ocr_title), style = MaterialTheme.typography.titleSmall)
                 Text(
-                    "Grayscale + contrast-stretch preprocessing for crumpled, oil-stained paper; " +
-                        "Latin + Devanagari recognizers run together.",
+                    stringResource(R.string.ocr_desc),
                     style = MaterialTheme.typography.bodySmall,
                 )
                 if (ocrBusy) LinearProgressIndicator(Modifier.fillMaxWidth())
@@ -237,7 +236,7 @@ fun CaptureScreen() {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Button(onClick = {
                         picker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-                    }) { Text("Pick slip photo") }
+                    }) { Text(stringResource(R.string.pick_photo)) }
                 }
             }
         }
@@ -245,7 +244,7 @@ fun CaptureScreen() {
         // ---------------- camera capture ----------------
         Card(Modifier.fillMaxWidth()) {
             Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                Text("Camera capture (handwritten tallies)", style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(R.string.camera_title), style = MaterialTheme.typography.titleSmall)
                 if (camGranted) {
                     CameraSection(
                         onCaptured = { uri ->
@@ -259,7 +258,7 @@ fun CaptureScreen() {
                     )
                 } else {
                     Button(onClick = { permLauncher.launch(arrayOf(Manifest.permission.CAMERA)) }) {
-                        Text("Grant camera access")
+                        Text(stringResource(R.string.grant_camera))
                     }
                 }
             }
@@ -268,10 +267,9 @@ fun CaptureScreen() {
         // ---------------- SMS ----------------
         Card(Modifier.fillMaxWidth()) {
             Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                Text("Delayed SMS chimes", style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(R.string.sms_title), style = MaterialTheme.typography.titleSmall)
                 Text(
-                    "Every incoming SMS is stored passively by the receiver; " +
-                        "inbox import backfills anything missed while the app was closed.",
+                    stringResource(R.string.sms_desc),
                     style = MaterialTheme.typography.bodySmall,
                 )
                 if (smsGranted) {
@@ -286,11 +284,11 @@ fun CaptureScreen() {
                                 status = if (imported >= 0) "Imported $imported SMS from inbox" else "SMS import failed ($imported)"
                             }
                         },
-                    ) { Text(if (importing) "Importing…" else "Import recent inbox SMS") }
+                    ) { Text(if (importing) stringResource(R.string.importing) else stringResource(R.string.import_sms)) }
                 } else {
                     Button(onClick = {
                         permLauncher.launch(arrayOf(Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS))
-                    }) { Text("Grant SMS access") }
+                    }) { Text(stringResource(R.string.grant_sms)) }
                 }
             }
         }
@@ -347,5 +345,5 @@ private fun CameraSection(onCaptured: (Uri) -> Unit, onError: (String) -> Unit) 
                 }
             },
         )
-    }) { Text("Capture & OCR") }
+    }) { Text(stringResource(R.string.capture_ocr)) }
 }

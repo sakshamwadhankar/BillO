@@ -16,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DeleteSweep
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -34,9 +35,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import com.billo.ledger.BillOApplication
+import com.billo.ledger.R
 import com.billo.ledger.core.FusionEngine
 import com.billo.ledger.core.FusionReport
 import com.billo.ledger.data.db.EvidenceChannel
@@ -60,17 +65,19 @@ fun EvidenceScreen(onCapture: () -> Unit = {}) {
     var fusionReport by remember { mutableStateOf<FusionReport?>(null) }
     var fusing by remember { mutableStateOf(false) }
 
+    val currentLang = AppCompatDelegate.getApplicationLocales().toLanguageTags().ifBlank { "en" }.substringBefore('-')
+
     Column(Modifier.fillMaxSize().padding(16.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
-                Text("Evidence inbox", style = MaterialTheme.typography.headlineSmall)
+                Text(stringResource(R.string.evidence_title), style = MaterialTheme.typography.headlineSmall)
                 Text(
-                    "Raw multi-channel input — fused into double entries",
+                    stringResource(R.string.evidence_subtitle),
                     style = MaterialTheme.typography.bodySmall,
                 )
             }
             IconButton(onClick = { scope.launch { app.evidence.clear() } }) {
-                Icon(Icons.Filled.DeleteSweep, contentDescription = "Clear evidence")
+                Icon(Icons.Filled.DeleteSweep, contentDescription = stringResource(R.string.clear_evidence))
             }
         }
         Spacer(Modifier.height(8.dp))
@@ -88,16 +95,45 @@ fun EvidenceScreen(onCapture: () -> Unit = {}) {
                         }
                     }
                 },
-            ) { Text(if (fusing) "Fusing…" else "Run fusion") }
-            OutlinedButton(onClick = onCapture) { Text("Capture…") }
+            ) { Text(if (fusing) stringResource(R.string.fusing) else stringResource(R.string.run_fusion)) }
+            OutlinedButton(onClick = onCapture) { Text(stringResource(R.string.capture_ellipsis)) }
+        }
+
+        // ---------------- language switcher ----------------
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Text(stringResource(R.string.language_label), style = MaterialTheme.typography.bodySmall)
+            FilterChip(
+                selected = currentLang == "en",
+                onClick = { AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("en")) },
+                label = { Text("English") },
+            )
+            FilterChip(
+                selected = currentLang == "hi",
+                onClick = { AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("hi")) },
+                label = { Text("हिंदी") },
+            )
+            FilterChip(
+                selected = currentLang == "mr",
+                onClick = { AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("mr")) },
+                label = { Text("मराठी") },
+            )
         }
 
         fusionReport?.let { r ->
             Card(Modifier.fillMaxWidth().padding(top = 8.dp)) {
                 Column(Modifier.padding(12.dp)) {
                     Text(
-                        "posted ${r.posted} · pending ${r.pendingPartial} · conflicts ${r.conflicts} · " +
-                            "lexicon drops ${r.lexiconDrops} · duplicates ${r.duplicateSkips}",
+                        stringResource(
+                            R.string.fusion_stats,
+                            r.posted,
+                            r.pendingPartial,
+                            r.conflicts,
+                            r.lexiconDrops,
+                            r.duplicateSkips,
+                        ),
                         style = MaterialTheme.typography.bodySmall,
                         fontWeight = FontWeight.Medium,
                     )
@@ -112,8 +148,7 @@ fun EvidenceScreen(onCapture: () -> Unit = {}) {
 
         if (evidence.isEmpty()) {
             Text(
-                "No evidence yet.\nSpeak Hinglish, snap a slip, or let an SMS chime in — " +
-                    "everything lands here first, then fusion reconciles it into the ledger.",
+                stringResource(R.string.evidence_empty),
                 style = MaterialTheme.typography.bodyMedium,
             )
         } else {
@@ -149,7 +184,7 @@ private fun EvidenceCard(evidence: EvidenceEntity) {
                 )
                 Spacer(Modifier.width(8.dp))
                 Text(
-                    "conf ${(evidence.confidence * 100).toInt()}%",
+                    stringResource(R.string.confidence, (evidence.confidence * 100).toInt()),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.secondary,
                 )
@@ -159,7 +194,7 @@ private fun EvidenceCard(evidence: EvidenceEntity) {
             evidence.parsedHint?.let { hint ->
                 Spacer(Modifier.height(4.dp))
                 Text(
-                    "on-device hints: $hint",
+                    stringResource(R.string.hints, hint),
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.primary,
                     fontWeight = FontWeight.Medium,

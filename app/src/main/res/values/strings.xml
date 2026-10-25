@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Language switcher -->
+    <string name="language_label">Language</string>
+
+    <!-- Navigation -->
+    <string name="nav_evidence">Evidence</string>
+    <string name="nav_ledger">Ledger</string>
+    <string name="nav_intel">Intel</string>
+    <string name="nav_sync">Sync</string>
+    <string name="nav_eval">Eval</string>
+
+    <!-- Evidence -->
+    <string name="evidence_title">Evidence inbox</string>
+    <string name="evidence_subtitle">Raw multi-channel input — fused into double entries</string>
+    <string name="clear_evidence">Clear evidence</string>
+    <string name="run_fusion">Run fusion</string>
+    <string name="fusing">Fusing…</string>
+    <string name="capture_ellipsis">Capture…</string>
+    <string name="fusion_stats">posted %1$d · pending %2$d · conflicts %3$d · lexicon drops %4$d · duplicates %5$d</string>
+    <string name="evidence_empty">No evidence yet.\nSpeak Hinglish, snap a slip, or let an SMS chime in — everything lands here first, then fusion reconciles it into the ledger.</string>
+    <string name="confidence">conf %1$d%%</string>
+    <string name="hints">on-device hints: %1$s</string>
+
+    <!-- Ledger -->
+    <string name="ledger_demo">Post PS demo entries</string>
+    <string name="ledger_reset">Reset</string>
+    <string name="tab_journal">Journal</string>
+    <string name="tab_balances">Balances</string>
+    <string name="ledger_empty">No entries yet. Post the demo scenario to see the double-entry invariant in action.</string>
+    <string name="balanced_ok">Assets+Expenses ₹%1$d = Liab+Equity+Income ₹%2$d — balanced ✓</string>
+    <string name="balanced_bad">UNBALANCED: A+E ₹%1$d ≠ L+Eq+I ₹%2$d</string>
+
+    <!-- Intelligence -->
+    <string name="intel_title">Intelligence</string>
+    <string name="intel_status_default">Seed a demo month, then walk the evaluation chain.</string>
+    <string name="chain_title">Raw Material Burn → Inferred Wastage → Reconciled Credit → True Accrual Profit</string>
+    <string name="seed_month">Seed 30-day demo month</string>
+    <string name="step_burn">1 · Infer burn rates</string>
+    <string name="step_cogs">2 · Estimate COGS</string>
+    <string name="step_loss">3 · Attribute loss (stock count)</string>
+    <string name="step_accrual">4 · True accrual profit</string>
+    <string name="ground_truth">Ground truth (hidden from the engine)</string>
+    <string name="zero_shot_title">Zero-shot recipe (burn rates)</string>
+    <string name="portion_drift">portion drift %1$s: %2$s → %3$s (%4$s%%)</string>
+    <string name="zero_shot_note">Zero-shot: no BOM — burn rates inferred from recorded consumption vs finished-item sales only.</string>
+    <string name="cogs_title">COGS without a BOM</string>
+    <string name="cogs_components">components: %1$s</string>
+    <string name="stockcount_title">Stock count (what you actually see)</string>
+    <string name="stockcount_hint">Lower any number to record a shortfall — the engine attributes it to spoilage, theft or personal consumption as a probability distribution.</string>
+    <string name="counted_label">%1$s counted</string>
+    <string name="loss_title">Loss attribution</string>
+    <string name="loss_line">expected %1$s, counted %2$s, loss %3$s — %4$s</string>
+    <string name="cause_spoilage">spoilage</string>
+    <string name="cause_theft">theft</string>
+    <string name="cause_personal">personal</string>
+    <string name="loss_posted">posted %1$s · %2$s</string>
+    <string name="accrual_title">True accrual profit</string>
+    <string name="ci_band">90%% CI %1$s – %2$s</string>
+    <string name="cash_on_hand">cash on hand: %1$s</string>
+    <string name="receivables_line">receivables (implicit credit): %1$s</string>
+    <string name="cash_profit_line">cash profit: %1$s</string>
+    <string name="accrual_revenue_line">accrual revenue: %1$s</string>
+    <string name="true_cogs_line">true COGS: %1$s</string>
+    <string name="attributed_losses_line">attributed losses: %1$s</string>
+    <string name="accrual_note">Accrual profit recognizes credit sales (receivables), true COGS from inferred burn rates, and attributed losses. Cash-on-hand ignores all three.</string>
+    <string name="status_seeded">Seeded %1$d days: %2$d plates, revenue %3$s</string>
+    <string name="status_burn">Burn rates inferred — zero-shot, no BOM</string>
+    <string name="status_cogs">COGS estimated by Monte-Carlo over burn × cost</string>
+    <string name="status_loss">Unrecorded loss attributed as spoilage/theft/personal</string>
+    <string name="status_accrual">True accrual profit computed</string>
+
+    <!-- Sync -->
+    <string name="sync_title">Sync</string>
+    <string name="sync_status">Node %1$s · %2$d CRDT ops in the local log. Merging is a commutative union of op-logs — order never matters.</string>
+    <string name="chaos_title">Hostile-clock chaos test</string>
+    <string name="chaos_desc">Simulates 3 family devices whose clocks reset to 1970, jump 90 days forward and drift backwards, then merges their op-logs.</string>
+    <string name="run_chaos">Run chaos test</string>
+    <string name="chaos_result">converged=%1$s · balanced=%2$s · same winner everywhere=%3$s · %4$d ops · %5$d clock anomalies survived</string>
+    <string name="bridge_title">Op-log transfer (clipboard bridge)</string>
+    <string name="bridge_desc">Bluetooth between real devices; on an emulator, move the op-log between two app instances via the clipboard — both go through the identical CRDT merge path.</string>
+    <string name="export_ops">Export ops</string>
+    <string name="import_merge">Import &amp; merge</string>
+    <string name="bt_title">Bluetooth sync (real devices)</string>
+    <string name="grant_bt">Grant Bluetooth permission</string>
+    <string name="start_server">Start server</string>
+    <string name="stop">Stop</string>
+    <string name="connect_sync">Connect &amp; sync</string>
+    <string name="no_bonded">No bonded devices. Pair a second device in system settings.</string>
+    <string name="log_title">Log</string>
+
+    <!-- Eval -->
+    <string name="eval_title">Evaluation</string>
+    <string name="eval_desc">Replays a ground-truthed chaos month through the whole probabilistic chain and scores it: fusion without triple-counting, burn-rate / COGS / profit CI coverage, loss attribution, hostile-clock CRDT convergence, double-entry balance. Note: this resets the local data.</string>
+    <string name="run_eval">Run full evaluation</string>
+    <string name="running">Running…</string>
+    <string name="eval_chain">Evaluation chain: Raw Material Burn → Inferred Wastage → Reconciled Credit → True Accrual Profit</string>
+
+    <!-- Capture -->
+    <string name="capture_title">Capture evidence</string>
+    <string name="capture_status">All processing is on-device — no internet permission exists in this app.</string>
+    <string name="noise_title">Ambient noise gate</string>
+    <string name="noise_desc">Weights voice evidence: at %1$d dBFS and above, speech is considered drowned by traffic (the 85 dB case).</string>
+    <string name="start_meter">Start meter</string>
+    <string name="stop_meter">Stop meter</string>
+    <string name="too_noisy">TOO NOISY: voice evidence will be down-weighted</string>
+    <string name="clear_enough">clear enough for speech</string>
+    <string name="stt_title">Offline Hindi speech (Vosk, on-device)</string>
+    <string name="listening">listening…</string>
+    <string name="heard">heard: “%1$s”</string>
+    <string name="model_missing">Vosk model not installed. One-time online setup: download vosk-model-small-hi-0.22 from alphacephei.com/vosk/models on a connected machine and extract it to:</string>
+    <string name="model_missing_after">After that, recognition is permanently offline.</string>
+    <string name="start_listening">Start listening</string>
+    <string name="stop_listening">Stop listening</string>
+    <string name="ocr_title">Slip / tally OCR (ML Kit, on-device)</string>
+    <string name="ocr_desc">Grayscale + contrast-stretch preprocessing for crumpled, oil-stained paper; Latin + Devanagari recognizers run together.</string>
+    <string name="pick_photo">Pick slip photo</string>
+    <string name="camera_title">Camera capture (handwritten tallies)</string>
+    <string name="grant_camera">Grant camera access</string>
+    <string name="capture_ocr">Capture &amp; OCR</string>
+    <string name="sms_title">Delayed SMS chimes</string>
+    <string name="sms_desc">Every incoming SMS is stored passively by the receiver; inbox import backfills anything missed while the app was closed.</string>
+    <string name="grant_sms">Grant SMS access</string>
+    <string name="import_sms">Import recent inbox SMS</string>
+    <string name="importing">Importing…</string>
+    <string name="grant_mic">Grant microphone access</string>
+    <string name="error_prefix">error: %1$s</string>
+</resources>

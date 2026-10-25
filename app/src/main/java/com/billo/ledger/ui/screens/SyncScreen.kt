@@ -31,9 +31,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.billo.ledger.BillOApplication
+import com.billo.ledger.R
 import com.billo.ledger.sync.SyncEvent
 import com.billo.ledger.core.Hlc
 import com.billo.ledger.data.db.LedgerOpEntity
@@ -104,10 +106,9 @@ fun SyncScreen() {
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Text("Sync", style = MaterialTheme.typography.headlineSmall)
+        Text(stringResource(R.string.sync_title), style = MaterialTheme.typography.headlineSmall)
         Text(
-            "Node ${app.nodeId.take(8)}… · $opCount CRDT ops in the local log. " +
-                "Merging is a commutative union of op-logs — order never matters.",
+            stringResource(R.string.sync_status, app.nodeId.take(8) + "…", opCount),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.primary,
         )
@@ -115,9 +116,9 @@ fun SyncScreen() {
         // ---------------- hostile clock chaos test ----------------
         Card(Modifier.fillMaxWidth()) {
             Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                Text("Hostile-clock chaos test", style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(R.string.chaos_title), style = MaterialTheme.typography.titleSmall)
                 Text(
-                    "Simulates 3 family devices whose clocks reset to 1970, jump 90 days forward and drift backwards, then merges their op-logs.",
+                    stringResource(R.string.chaos_desc),
                     style = MaterialTheme.typography.bodySmall,
                 )
                 Button(enabled = !busy, onClick = {
@@ -126,12 +127,17 @@ fun SyncScreen() {
                         chaosReport = ChaosSimulator().run()
                         log("Chaos: converged=${chaosReport?.mergedOpsIdentical} balanced=${chaosReport?.allBalanced} winner=${chaosReport?.sameWinnerEverywhere}")
                     } finally { busy = false }
-                }) { Text("Run chaos test") }
+                }) { Text(stringResource(R.string.run_chaos)) }
                 chaosReport?.let { r ->
                     Text(
-                        "converged=${r.mergedOpsIdentical} · balanced=${r.allBalanced} · " +
-                            "same winner everywhere=${r.sameWinnerEverywhere} · ${r.totalOps} ops · " +
-                            "${r.anomaliesInjected} clock anomalies survived",
+                        stringResource(
+                            R.string.chaos_result,
+                            r.mergedOpsIdentical.toString(),
+                            r.allBalanced.toString(),
+                            r.sameWinnerEverywhere.toString(),
+                            r.totalOps,
+                            r.anomaliesInjected,
+                        ),
                         style = MaterialTheme.typography.bodySmall,
                         color = if (r.mergedOpsIdentical && r.allBalanced && r.sameWinnerEverywhere) {
                             Color(0xFF26A69A)
@@ -150,9 +156,9 @@ fun SyncScreen() {
         // ---------------- clipboard sync bridge ----------------
         Card(Modifier.fillMaxWidth()) {
             Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                Text("Op-log transfer (clipboard bridge)", style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(R.string.bridge_title), style = MaterialTheme.typography.titleSmall)
                 Text(
-                    "Bluetooth between real devices; on an emulator, move the op-log between two app instances via the clipboard — both go through the identical CRDT merge path.",
+                    stringResource(R.string.bridge_desc),
                     style = MaterialTheme.typography.bodySmall,
                 )
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -176,7 +182,7 @@ fun SyncScreen() {
                             cm.setPrimaryClip(android.content.ClipData.newPlainText("billo-ops", arr.toString()))
                             log("Exported ${ops.size} ops to clipboard (${arr.toString().length} chars)")
                         }
-                    }) { Text("Export ops") }
+                    }) { Text(stringResource(R.string.export_ops)) }
 
                     OutlinedButton(onClick = {
                         scope.launch {
@@ -209,7 +215,7 @@ fun SyncScreen() {
                                 log("Import failed: ${e.message}")
                             } finally { busy = false }
                         }
-                    }) { Text("Import & merge") }
+                    }) { Text(stringResource(R.string.import_merge)) }
                 }
                 mergeReport?.let { r ->
                     Text(
@@ -223,18 +229,18 @@ fun SyncScreen() {
         // ---------------- Bluetooth ----------------
         Card(Modifier.fillMaxWidth()) {
             Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                Text("Bluetooth sync (real devices)", style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(R.string.bt_title), style = MaterialTheme.typography.titleSmall)
                 if (!btGranted) {
                     Button(onClick = { btLauncher.launch(android.Manifest.permission.BLUETOOTH_CONNECT) }) {
-                        Text("Grant Bluetooth permission")
+                        Text(stringResource(R.string.grant_bt))
                     }
                 } else {
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        OutlinedButton(onClick = { bt.startServer(); log("BT server listening") }) { Text("Start server") }
-                        OutlinedButton(onClick = { bt.stopServer(); log("BT server stopped") }) { Text("Stop") }
+                        OutlinedButton(onClick = { bt.startServer(); log("BT server listening") }) { Text(stringResource(R.string.start_server)) }
+                        OutlinedButton(onClick = { bt.stopServer(); log("BT server stopped") }) { Text(stringResource(R.string.stop)) }
                     }
                     if (devices.isEmpty()) {
-                        Text("No bonded devices. Pair a second device in system settings.", style = MaterialTheme.typography.bodySmall)
+                        Text(stringResource(R.string.no_bonded), style = MaterialTheme.typography.bodySmall)
                     } else {
                         devices.forEachIndexed { i, d ->
                             val name = runCatching { d.name ?: "device" }.getOrDefault("device")
@@ -262,7 +268,7 @@ fun SyncScreen() {
                                     }
                                 } finally { busy = false }
                             }
-                        }) { Text("Connect & sync") }
+                        }) { Text(stringResource(R.string.connect_sync)) }
                     }
                 }
             }
@@ -272,7 +278,7 @@ fun SyncScreen() {
         if (logLines.isNotEmpty()) {
             Card(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(12.dp)) {
-                    Text("Log", style = MaterialTheme.typography.titleSmall)
+                    Text(stringResource(R.string.log_title), style = MaterialTheme.typography.titleSmall)
                     logLines.take(8).forEach { line ->
                         Text(line, style = MaterialTheme.typography.labelSmall)
                     }

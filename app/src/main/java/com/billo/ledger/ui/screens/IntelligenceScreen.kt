@@ -31,9 +31,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.billo.ledger.BillOApplication
+import com.billo.ledger.R
 import com.billo.ledger.core.AccrualReport
 import com.billo.ledger.core.BurnReport
 import com.billo.ledger.core.CogsItem
@@ -56,7 +58,12 @@ fun IntelligenceScreen() {
     val inventory = remember { InventoryLedger(app.database) }
 
     var busy by remember { mutableStateOf(false) }
-    var status by remember { mutableStateOf("Seed a demo month, then walk the evaluation chain.") }
+    val defaultStatus = stringResource(R.string.intel_status_default)
+    val sBurn = stringResource(R.string.status_burn)
+    val sCogs = stringResource(R.string.status_cogs)
+    val sLoss = stringResource(R.string.status_loss)
+    val sAccrual = stringResource(R.string.status_accrual)
+    var status by remember { mutableStateOf<String?>(null) }
     var seedSummary by remember { mutableStateOf<SeedSummary?>(null) }
     var burn by remember { mutableStateOf<BurnReport?>(null) }
     var cogs by remember { mutableStateOf<Map<String, CogsItem>?>(null) }
@@ -71,14 +78,14 @@ fun IntelligenceScreen() {
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Text("Intelligence", style = MaterialTheme.typography.headlineSmall)
-        Text(status, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
+        Text(stringResource(R.string.intel_title), style = MaterialTheme.typography.headlineSmall)
+        Text(status ?: defaultStatus, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
         if (busy) LinearProgressIndicator(Modifier.fillMaxWidth())
 
         // ---------------- seed + evaluation chain ----------------
         Card(Modifier.fillMaxWidth()) {
             Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                Text("Raw Material Burn → Inferred Wastage → Reconciled Credit → True Accrual Profit",
+                Text(stringResource(R.string.chain_title),
                     style = MaterialTheme.typography.titleSmall)
                 Button(enabled = !busy, onClick = {
                     scope.launch {
@@ -93,12 +100,17 @@ fun IntelligenceScreen() {
                             inventory.allItems().filter { it.kind == com.billo.ledger.data.db.ItemKind.RAW }.forEach {
                                 countedInputs[it.name] = "%.2f".format(inventory.stockOnHand(it.name))
                             }
-                            status = "Seeded ${seed.days} days: ${seed.soldPlates} plates, revenue ₹${seed.revenuePaise / 100}"
+                            status = context.getString(
+                                R.string.status_seeded,
+                                seed.days,
+                                seed.soldPlates,
+                                formatRupees(seed.revenuePaise),
+                            )
                         } finally {
                             busy = false
                         }
                     }
-                }) { Text("Seed 30-day demo month") }
+                }) { Text(stringResource(R.string.seed_month)) }
 
                 OutlinedButton(
                     enabled = !busy && seedSummary != null,
@@ -107,11 +119,11 @@ fun IntelligenceScreen() {
                             busy = true
                             try {
                                 burn = RecipeInference(inventory).inferBurn()
-                                status = "Burn rates inferred — zero-shot, no BOM"
+                                status = sBurn
                             } finally { busy = false }
                         }
                     },
-                ) { Text("1 · Infer burn rates") }
+                ) { Text(stringResource(R.string.step_burn)) }
 
                 OutlinedButton(
                     enabled = !busy && burn != null,
@@ -120,11 +132,11 @@ fun IntelligenceScreen() {
                             busy = true
                             try {
                                 cogs = com.billo.ledger.core.CogsEstimator(inventory).estimate()
-                                status = "COGS estimated by Monte-Carlo over burn × cost"
+                                status = sCogs
                             } finally { busy = false }
                         }
                     },
-                ) { Text("2 · Estimate COGS") }
+                ) { Text(stringResource(R.string.step_cogs)) }
 
                 OutlinedButton(
                     enabled = !busy && seedSummary != null,
@@ -134,11 +146,11 @@ fun IntelligenceScreen() {
                             try {
                                 val counted = countedInputs.mapValues { it.value.toDoubleOrNull() ?: 0.0 }
                                 lossReports = LossAttribution(inventory, app.ledger).attributeAndPost(counted)
-                                status = "Unrecorded loss attributed as spoilage/theft/personal"
+                                status = sLoss
                             } finally { busy = false }
                         }
                     },
-                ) { Text("3 · Attribute loss (stock count)") }
+                ) { Text(stringResource(R.string.step_loss)) }
 
                 OutlinedButton(
                     enabled = !busy && cogs != null,
@@ -147,18 +159,18 @@ fun IntelligenceScreen() {
                             busy = true
                             try {
                                 accrual = AccrualReporter(app.ledger, inventory).report()
-                                status = "True accrual profit computed"
+                                status = sAccrual
                             } finally { busy = false }
                         }
                     },
-                ) { Text("4 · True accrual profit") }
+                ) { Text(stringResource(R.string.step_accrual)) }
             }
         }
 
         seedSummary?.let { seed ->
             Card(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(12.dp)) {
-                    Text("Ground truth (hidden from the engine)", style = MaterialTheme.typography.titleSmall)
+                    Text(stringResource(R.string.ground_truth), style = MaterialTheme.typography.titleSmall)
                     Text(
                         "${seed.days} days · ${seed.soldPlates} plates · revenue ${formatRupees(seed.revenuePaise)} · " +
                             "COGS ${formatRupees(seed.cogsPaise)} · losses ${formatRupees(seed.lossValuePaise)} · " +
@@ -172,7 +184,7 @@ fun IntelligenceScreen() {
         burn?.let { b ->
             Card(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    Text("Zero-shot recipe (burn rates)", style = MaterialTheme.typography.titleSmall)
+                    Text(stringResource(R.string.zero_shot_title), style = MaterialTheme.typography.titleSmall)
                     b.estimates.forEach { e ->
                         val (lo, hi) = e.gramsPerUnit.ci90()
                         val displayUnit = if (e.rawUnit == "litre") "ml" else "g"
@@ -185,14 +197,18 @@ fun IntelligenceScreen() {
                     }
                     b.portionDrift.forEach { d ->
                         Text(
-                            "portion drift ${d.rawItem}: %.1f → %.1f (%.1f%%)".format(
-                                d.overallPerUnit, d.recentPerUnit, d.driftPct,
+                            stringResource(
+                                R.string.portion_drift,
+                                d.rawItem,
+                                String.format("%.1f", d.overallPerUnit),
+                                String.format("%.1f", d.recentPerUnit),
+                                String.format("%.1f", d.driftPct),
                             ),
                             style = MaterialTheme.typography.labelSmall,
                             color = if (kotlin.math.abs(d.driftPct) > 8) Color(0xFFE57373) else Color.Unspecified,
                         )
                     }
-                    Text(b.note, style = MaterialTheme.typography.labelSmall)
+                    Text(stringResource(R.string.zero_shot_note), style = MaterialTheme.typography.labelSmall)
                 }
             }
         }
@@ -200,7 +216,7 @@ fun IntelligenceScreen() {
         cogs?.let { c ->
             Card(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    Text("COGS without a BOM", style = MaterialTheme.typography.titleSmall)
+                    Text(stringResource(R.string.cogs_title), style = MaterialTheme.typography.titleSmall)
                     c.forEach { (item, cogsItem) ->
                         val (lo, hi) = cogsItem.cogsPerUnitPaise.ci90()
                         Text(
@@ -208,7 +224,10 @@ fun IntelligenceScreen() {
                             style = MaterialTheme.typography.bodySmall,
                         )
                         Text(
-                            "components: " + cogsItem.components.entries.joinToString { "${it.key} ${formatRupees(it.value.toLong())}" },
+                            stringResource(
+                                R.string.cogs_components,
+                                cogsItem.components.entries.joinToString { "${it.key} ${formatRupees(it.value.toLong())}" },
+                            ),
                             style = MaterialTheme.typography.labelSmall,
                         )
                     }
@@ -219,16 +238,16 @@ fun IntelligenceScreen() {
         if (countedInputs.isNotEmpty()) {
             Card(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                    Text("Stock count (what you actually see)", style = MaterialTheme.typography.titleSmall)
+                    Text(stringResource(R.string.stockcount_title), style = MaterialTheme.typography.titleSmall)
                     Text(
-                        "Lower any number to record a shortfall — the engine attributes it to spoilage, theft or personal consumption as a probability distribution.",
+                        stringResource(R.string.stockcount_hint),
                         style = MaterialTheme.typography.bodySmall,
                     )
                     countedInputs.forEach { (name, value) ->
                         OutlinedTextField(
                             value = value,
                             onValueChange = { countedInputs[name] = it },
-                            label = { Text("$name counted") },
+                            label = { Text(stringResource(R.string.counted_label, name)) },
                             modifier = Modifier.fillMaxWidth(),
                             singleLine = true,
                         )
@@ -240,21 +259,31 @@ fun IntelligenceScreen() {
         lossReports?.let { reports ->
             Card(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                    Text("Loss attribution", style = MaterialTheme.typography.titleSmall)
+                    Text(stringResource(R.string.loss_title), style = MaterialTheme.typography.titleSmall)
                     reports.forEach { r ->
                         Text(r.itemName, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold)
                         Text(
-                            "expected %.2f, counted %.2f, loss %.2f — %s".format(
-                                r.expectedQty, r.countedQty, r.lossQtyDist.mean(), r.verdict,
+                            stringResource(
+                                R.string.loss_line,
+                                String.format("%.2f", r.expectedQty),
+                                String.format("%.2f", r.countedQty),
+                                String.format("%.2f", r.lossQtyDist.mean()),
+                                r.verdict,
                             ),
                             style = MaterialTheme.typography.bodySmall,
                         )
-                        CauseBar("spoilage", r.causes.spoilage, Color(0xFF26A69A))
-                        CauseBar("theft", r.causes.theft, Color(0xFFE57373))
-                        CauseBar("personal", r.causes.personal, Color(0xFFFFB300))
+                        CauseBar(stringResource(R.string.cause_spoilage), r.causes.spoilage, Color(0xFF26A69A))
+                        CauseBar(stringResource(R.string.cause_theft), r.causes.theft, Color(0xFFE57373))
+                        CauseBar(stringResource(R.string.cause_personal), r.causes.personal, Color(0xFFFFB300))
                         if (r.postedPaise > 0) {
-                            Text("posted ${formatRupees(r.postedPaise)} · ${r.covariates.entries.joinToString { "${it.key}=${it.value}" }}",
-                                style = MaterialTheme.typography.labelSmall)
+                            Text(
+                                stringResource(
+                                    R.string.loss_posted,
+                                    formatRupees(r.postedPaise),
+                                    r.covariates.entries.joinToString { "${it.key}=${it.value}" },
+                                ),
+                                style = MaterialTheme.typography.labelSmall,
+                            )
                         }
                     }
                 }
@@ -264,7 +293,7 @@ fun IntelligenceScreen() {
         accrual?.let { a ->
             Card(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    Text("True accrual profit", style = MaterialTheme.typography.titleSmall)
+                    Text(stringResource(R.string.accrual_title), style = MaterialTheme.typography.titleSmall)
                     val (lo, hi) = a.accrualProfitPaise.ci90()
                     Text(
                         formatRupees(a.accrualProfitPaise.mean().toLong()),
@@ -273,18 +302,18 @@ fun IntelligenceScreen() {
                         color = MaterialTheme.colorScheme.primary,
                     )
                     Text(
-                        "90% CI ${formatRupees(lo.toLong())} – ${formatRupees(hi.toLong())}",
+                        stringResource(R.string.ci_band, formatRupees(lo.toLong()), formatRupees(hi.toLong())),
                         style = MaterialTheme.typography.bodyMedium,
                     )
                     DistBars(a.accrualProfitPaise, Modifier.fillMaxWidth().height(48.dp))
                     Spacer(Modifier.height(4.dp))
-                    Text("cash on hand: ${formatRupees(a.cashOnHandPaise)}", style = MaterialTheme.typography.bodySmall)
-                    Text("receivables (implicit credit): ${formatRupees(a.receivablesPaise)}", style = MaterialTheme.typography.bodySmall)
-                    Text("cash profit: ${formatRupees(a.cashProfitPaise.mean().toLong())}", style = MaterialTheme.typography.bodySmall)
-                    Text("accrual revenue: ${formatRupees(a.accrualRevenuePaise.mean().toLong())}", style = MaterialTheme.typography.bodySmall)
-                    Text("true COGS: ${formatRupees(a.cogsPaise.mean().toLong())}", style = MaterialTheme.typography.bodySmall)
-                    Text("attributed losses: ${formatRupees(a.recordedLossPaise)}", style = MaterialTheme.typography.bodySmall)
-                    Text(a.note, style = MaterialTheme.typography.labelSmall)
+                    Text(stringResource(R.string.cash_on_hand, formatRupees(a.cashOnHandPaise)), style = MaterialTheme.typography.bodySmall)
+                    Text(stringResource(R.string.receivables_line, formatRupees(a.receivablesPaise)), style = MaterialTheme.typography.bodySmall)
+                    Text(stringResource(R.string.cash_profit_line, formatRupees(a.cashProfitPaise.mean().toLong())), style = MaterialTheme.typography.bodySmall)
+                    Text(stringResource(R.string.accrual_revenue_line, formatRupees(a.accrualRevenuePaise.mean().toLong())), style = MaterialTheme.typography.bodySmall)
+                    Text(stringResource(R.string.true_cogs_line, formatRupees(a.cogsPaise.mean().toLong())), style = MaterialTheme.typography.bodySmall)
+                    Text(stringResource(R.string.attributed_losses_line, formatRupees(a.recordedLossPaise)), style = MaterialTheme.typography.bodySmall)
+                    Text(stringResource(R.string.accrual_note), style = MaterialTheme.typography.labelSmall)
                 }
             }
         }

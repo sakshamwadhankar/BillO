@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Language switcher -->
+    <string name="language_label">भाषा</string>
+
+    <!-- Navigation -->
+    <string name="nav_evidence">सबूत</string>
+    <string name="nav_ledger">खाता</string>
+    <string name="nav_intel">बुद्धि</string>
+    <string name="nav_sync">सिंक</string>
+    <string name="nav_eval">मूल्यांकन</string>
+
+    <!-- Evidence -->
+    <string name="evidence_title">सबूत इनबॉक्स</string>
+    <string name="evidence_subtitle">बहु-चैनल कच्चा इनपुट — दोहरी प्रविष्टियों में जुड़ता है</string>
+    <string name="clear_evidence">सबूत मिटाएँ</string>
+    <string name="run_fusion">फ्यूजन चलाएँ</string>
+    <string name="fusing">जोड़ रहे हैं…</string>
+    <string name="capture_ellipsis">कैप्चर…</string>
+    <string name="fusion_stats">दर्ज %1$d · लंबित %2$d · टकराव %3$d · शब्दकोश %4$d · डुप्लिकेट %5$d</string>
+    <string name="evidence_empty">अभी कोई सबूत नहीं।\nहिंग्लिश बोलें, पर्ची की तस्वीर लें या SMS आने दें — सब पहले यहीं आता है, फिर फ्यूजन इसे खाते में जोड़ता है।</string>
+    <string name="confidence">विश्वास %1$d%%</string>
+    <string name="hints">डिवाइस संकेत: %1$s</string>
+
+    <!-- Ledger -->
+    <string name="ledger_demo">डेमो प्रविष्टियाँ डालें</string>
+    <string name="ledger_reset">रीसेट</string>
+    <string name="tab_journal">रोज़नामचा</string>
+    <string name="tab_balances">शेष</string>
+    <string name="ledger_empty">अभी कोई प्रविष्टि नहीं। डेमो चलाकर दोहरी-प्रविष्टि का संतुलन देखें।</string>
+    <string name="balanced_ok">संपत्ति+व्यय ₹%1$d = देय+पूँजी+आय ₹%2$d — संतुलित ✓</string>
+    <string name="balanced_bad">असंतुलित: सं+व्य ₹%1$d ≠ दे+पू+आ ₹%2$d</string>
+
+    <!-- Intelligence -->
+    <string name="intel_title">बुद्धिमत्ता</string>
+    <string name="intel_status_default">पहले डेमो महीना बनाएँ, फिर मूल्यांकन श्रृंखला चलाएँ।</string>
+    <string name="chain_title">कच्चे माल की खपत → अनुमानित नुकसान → समाधित उधार → सच्चा उपार्जित लाभ</string>
+    <string name="seed_month">30-दिन का डेमो महीना बनाएँ</string>
+    <string name="step_burn">1 · खपत दर पता करें</string>
+    <string name="step_cogs">2 · लागत अनुमानित करें</string>
+    <string name="step_loss">3 · नुकसान बाँटें (गिनती)</string>
+    <string name="step_accrual">4 · सच्चा उपार्जित लाभ</string>
+    <string name="ground_truth">असली आँकड़े (इंजन से छिपे)</string>
+    <string name="zero_shot_title">बिना-रेसिपी अनुमान (खपत दर)</string>
+    <string name="portion_drift">हिस्सा बदलाव %1$s: %2$s → %3$s (%4$s%%)</string>
+    <string name="zero_shot_note">बिना-BOM: खपत दर केवल दर्ज खप और बिक्री से निकाले गए।</string>
+    <string name="cogs_title">बिना-BOM लागत (COGS)</string>
+    <string name="cogs_components">घटक: %1$s</string>
+    <string name="stockcount_title">गोदाम गिनती (जो आप सच में देखते हैं)</string>
+    <string name="stockcount_hint">कोई संख्या घटाकर कमी दर्ज करें — इंजन उसे सड़ान, चोरी या निजी खप में प्रायिक बंटन के रूप में बाँटता है।</string>
+    <string name="counted_label">%1$s गिनी गई</string>
+    <string name="loss_title">नुकसान बँटवारा</string>
+    <string name="loss_line">अपेक्षित %1$s, गिनी %2$s, नुकसान %3$s — %4$s</string>
+    <string name="cause_spoilage">सड़ान</string>
+    <string name="cause_theft">चोरी</string>
+    <string name="cause_personal">निजी खप</string>
+    <string name="loss_posted">दर्ज %1$s · %2$s</string>
+    <string name="accrual_title">सच्चा उपार्जित लाभ</string>
+    <string name="ci_band">90%% विश्वास अंतराल %1$s – %2$s</string>
+    <string name="cash_on_hand">नगद उपलब्ध: %1$s</string>
+    <string name="receivables_line">बकाया (अप्रत्यक्ष उधार): %1$s</string>
+    <string name="cash_profit_line">नगद लाभ: %1$s</string>
+    <string name="accrual_revenue_line">उपार्जित आय: %1$s</string>
+    <string name="true_cogs_line">असली लागत: %1$s</string>
+    <string name="attributed_losses_line">बाँटा गया नुकसान: %1$s</string>
+    <string name="accrual_note">उपार्जित लाभ उधार बिक्री (बकाया), अनुमानित खपत से असली लागत, और बाँटे गए नुकसान को पहचानता है। नगद इन तीनों को अनदेखा करता है।</string>
+    <string name="status_seeded">%1$d दिन बनाए: %2$d प्लेट, आय %3$s</string>
+    <string name="status_burn">खपत दर निकाली — बिना-BOM</string>
+    <string name="status_cogs">खपत × कीमत पर मोंटे-कार्लो लागत अनुमान</string>
+    <string name="status_loss">बिना-दर्ज नुकसान सड़ान/चोरी/निजी में बाँटा गया</string>
+    <string name="status_accrual">सच्चा उपार्जित लाभ निकाला गया</string>
+
+    <!-- Sync -->
+    <string name="sync_title">सिंक</string>
+    <string name="sync_status">नोड %1$s · लोकल लॉग में %2$d CRDT ऑप्स। मर्ज ऑप-लॉग का क्रम-रहित मिलन है — क्रम मायने नहीं रखता।</string>
+    <string name="chaos_title">शत्रु-घड़ी विक्षोभ परीक्षण</string>
+    <string name="chaos_desc">3 पारिवारिक डिवाइस जिनकी घड़ी 1970 में रीसेट होती है, 90 दिन आगे छलाँग लगाती है और पीछे खिसकती है — फिर उनके ऑप-लॉग मिलाए जाते हैं।</string>
+    <string name="run_chaos">विक्षोभ परीक्षण चलाएँ</string>
+    <string name="chaos_result">एकीकृत=%1$s · संतुलित=%2$s · हर जगह वही विजेता=%3$s · %4$d ऑप्स · %5$d घड़ी विक्षोभ सहे</string>
+    <string name="bridge_title">ऑप-लॉग ट्रांसफर (क्लिपबोर्ड पुल)</string>
+    <string name="bridge_desc">असली डिवाइसों पर ब्लूटूथ; एमुलेटर पर क्लिपबोर्ड से ऑप-लॉग दूसरे ऐप में भेजें — दोनों एक ही CRDT मर्ज पथ से गुज़रते हैं।</string>
+    <string name="export_ops">ऑप्स निर्यात</string>
+    <string name="import_merge">आयात और मर्ज</string>
+    <string name="bt_title">ब्लूटूथ सिंक (असली डिवाइस)</string>
+    <string name="grant_bt">ब्लूटूथ अनुमति दें</string>
+    <string name="start_server">सर्वर चालू करें</string>
+    <string name="stop">रोकें</string>
+    <string name="connect_sync">जोड़ें और सिंक करें</string>
+    <string name="no_bonded">कोई पेयर्ड डिवाइस नहीं। सिस्टम सेटिंग में दूसरा डिवाइस जोड़ें।</string>
+    <string name="log_title">लॉग</string>
+
+    <!-- Eval -->
+    <string name="eval_title">मूल्यांकन</string>
+    <string name="eval_desc">असली आँकड़ों वाले विक्षोभ महीने को पूरी प्रायिक श्रृंखला से दोहराकर स्कोर करता है: बिना-तिहरी-गिनती फ्यूजन, खपत/लागत/लाभ CI कवरेज, नुकसान बँटवारा, शत्रु-घड़ी CRDT एकीकरण, दोहरी-प्रविष्टि संतुलन। ध्यान दें: यह लोकल डेटा रीसेट करता है।</string>
+    <string name="run_eval">पूरा मूल्यांकन चलाएँ</string>
+    <string name="running">चल रहा है…</string>
+    <string name="eval_chain">मूल्यांकन श्रृंखला: कच्चे माल की खपत → अनुमानित नुकसान → समाधित उधार → सच्चा उपार्जित लाभ</string>
+
+    <!-- Capture -->
+    <string name="capture_title">सबूत कैप्चर करें</string>
+    <string name="capture_status">सारी प्रोसेसिंग डिवाइस पर — इस ऐप में इंटरनेट अनुमति ही नहीं है।</string>
+    <string name="noise_title">परिवेशी शोर गेट</string>
+    <string name="noise_desc">आवाज़ सबूत का भार: %1$d dBFS और ऊपर बोली ट्रैफ़िक में डूबी मानी जाती है (85 dB मामला)।</string>
+    <string name="start_meter">मीटर चालू</string>
+    <string name="stop_meter">मीटर बंद</string>
+    <string name="too_noisy">बहुत शोर: आवाज़ सबूत का भार घटेगा</string>
+    <string name="clear_enough">बोलने लायक स्पष्ट</string>
+    <string name="stt_title">ऑफलाइन हिंदी आवाज़ (Vosk, डिवाइस पर)</string>
+    <string name="listening">सुन रहे हैं…</string>
+    <string name="heard">सुना: “%1$s”</string>
+    <string name="model_missing">Vosk मॉडल इंस्टॉल नहीं है। एक बार ऑनलाइन सेटअप: जुड़ी मशीन से alphacephei.com/vosk/models से vosk-model-small-hi-0.22 डाउनलोड करें और यहाँ निकालें:</string>
+    <string name="model_missing_after">उसके बाद पहचान हमेशा ऑफलाइन रहती है।</string>
+    <string name="start_listening">सुनना शुरू</string>
+    <string name="stop_listening">सुनना बंद</string>
+    <string name="ocr_title">पर्ची/खाता OCR (ML Kit, डिवाइस पर)</string>
+    <string name="ocr_desc">सिकुड़े, तैलीय कागज़ के लिए ग्रेस्केल+कंट्रास्ट प्रीप्रोसेसिंग; लैटिन+देवनागरी पहचानकर्ता एक साथ चलते हैं।</string>
+    <string name="pick_photo">पर्ची की तस्वीर चुनें</string>
+    <string name="camera_title">कैमरा कैप्चर (हस्तलिखित खाता)</string>
+    <string name="grant_camera">कैमरा अनुमति दें</string>
+    <string name="capture_ocr">कैप्चर &amp; OCR</string>
+    <string name="sms_title">देर से आने वाले SMS</string>
+    <string name="sms_desc">हर आने वाला SMS रिसीवर निष्क्रिय रूप से सुरक्षित करता है; ऐप बंद रहने के दौरान छूटे SMS इनबॉक्स से भरें।</string>
+    <string name="grant_sms">SMS अनुमति दें</string>
+    <string name="import_sms">हाल के इनबॉक्स SMS आयात</string>
+    <string name="importing">आयात हो रहा है…</string>
+    <string name="grant_mic">माइक्रोफ़ोन अनुमति दें</string>
+    <string name="error_prefix">त्रुटि: %1$s</string>
+</resources>

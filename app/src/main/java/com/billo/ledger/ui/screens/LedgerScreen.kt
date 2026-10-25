@@ -30,9 +30,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.billo.ledger.BillOApplication
+import com.billo.ledger.R
 import com.billo.ledger.data.ledger.Balance
 import com.billo.ledger.data.ledger.ChartOfAccounts
 import com.billo.ledger.data.ledger.Posting
@@ -71,7 +73,7 @@ fun LedgerScreen() {
                         }
                     }
                 },
-            ) { Text("Post PS demo entries") }
+            ) { Text(stringResource(R.string.ledger_demo)) }
             OutlinedButton(
                 enabled = !busy,
                 onClick = {
@@ -84,20 +86,19 @@ fun LedgerScreen() {
                         }
                     }
                 },
-            ) { Text("Reset") }
+            ) { Text(stringResource(R.string.ledger_reset)) }
         }
 
         TabRow(selectedTabIndex = tab) {
-            Tab(selected = tab == 0, onClick = { tab = 0 }, text = { Text("Journal") })
-            Tab(selected = tab == 1, onClick = { tab = 1 }, text = { Text("Balances") })
+            Tab(selected = tab == 0, onClick = { tab = 0 }, text = { Text(stringResource(R.string.tab_journal)) })
+            Tab(selected = tab == 1, onClick = { tab = 1 }, text = { Text(stringResource(R.string.tab_balances)) })
         }
 
         if (tab == 0) {
             if (entries.isEmpty()) {
                 Column(Modifier.padding(16.dp)) {
                     Text(
-                        "No entries yet. Post the demo scenario to see the " +
-                            "double-entry invariant in action.",
+                        stringResource(R.string.ledger_empty),
                         style = MaterialTheme.typography.bodyMedium,
                     )
                 }
@@ -171,8 +172,8 @@ private fun BalanceList(balances: List<Balance>) {
     Column(Modifier.fillMaxSize().padding(16.dp)) {
         if (balances.isNotEmpty()) {
             Text(
-                if (balanced) "Assets+Expenses ₹${debitNormal / 100} = Liab+Equity+Income ₹${creditNormal / 100} — balanced ✓"
-                else "UNBALANCED: A+E ₹${debitNormal / 100} ≠ L+Eq+I ₹${creditNormal / 100}",
+                if (balanced) stringResource(R.string.balanced_ok, debitNormal / 100, creditNormal / 100)
+                else stringResource(R.string.balanced_bad, debitNormal / 100, creditNormal / 100),
                 style = MaterialTheme.typography.labelMedium,
                 color = if (balanced) Color(0xFF26A69A) else Color(0xFFE57373),
                 fontWeight = FontWeight.SemiBold,

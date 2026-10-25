@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Language switcher -->
+    <string name="language_label">भाषा</string>
+
+    <!-- Navigation -->
+    <string name="nav_evidence">पुरावा</string>
+    <string name="nav_ledger">खाते</string>
+    <string name="nav_intel">बुद्धि</string>
+    <string name="nav_sync">सिंक</string>
+    <string name="nav_eval">मूल्यमापन</string>
+
+    <!-- Evidence -->
+    <string name="evidence_title">पुरावा इनबॉक्स</string>
+    <string name="evidence_subtitle">बहु-चॅनेल कच्चा इनपुट — दुहेरी नोंदींमध्ये जोडला जातो</string>
+    <string name="clear_evidence">पुरावा पुसा</string>
+    <string name="run_fusion">फ्यूजन चालवा</string>
+    <string name="fusing">जोडत आहे…</string>
+    <string name="capture_ellipsis">कॅप्चर…</string>
+    <string name="fusion_stats">नोंद %1$d · प्रलंबित %2$d · टक्कार %3$d · शब्दकोश %4$d · प्रतिलिपी %5$d</string>
+    <string name="evidence_empty">अजून पुरावा नाही.\nहिंग्लिश बोला, पावतीचा फोटो घ्या किंवा SMS येऊ द्या — सर्व प्रथम इथे येते, मग फ्यूजन खात्यात जोडते.</string>
+    <string name="confidence">विश्वास %1$d%%</string>
+    <string name="hints">डिव्हाइस इशारे: %1$s</string>
+
+    <!-- Ledger -->
+    <string name="ledger_demo">डेमो नोंदी टाका</string>
+    <string name="ledger_reset">रीसेट</string>
+    <string name="tab_journal">जर्नल</string>
+    <string name="tab_balances">शिल्लक</string>
+    <string name="ledger_empty">अजून नोंदी नाहीत. डेमो चालवून दुहेरी-नोंदीचे संतुलन पहा.</string>
+    <string name="balanced_ok">मालमत्ता+खर्च ₹%1$d = देय+भांडवल+उत्पन्न ₹%2$d — संतुलित ✓</string>
+    <string name="balanced_bad">असंतुलित: मा+ख ₹%1$d ≠ दे+भा+उ ₹%2$d</string>
+
+    <!-- Intelligence -->
+    <string name="intel_title">बुद्धिमत्ता</string>
+    <string name="intel_status_default">प्रथम डेमो महिना तयार करा, मग मूल्यमापन साखळी चालवा.</string>
+    <string name="chain_title">कच्च्या मालाची खप → अंदाजित नुकसान → निकाली उधारी → खरा मिळकत नफा</string>
+    <string name="seed_month">३० दिवसांचा डेमो महिना तयार करा</string>
+    <string name="step_burn">१ · खप दर काढा</string>
+    <string name="step_cogs">२ · लागत अंदाज करा</string>
+    <string name="step_loss">३ · नुकसान वाटप (मोजमाप)</string>
+    <string name="step_accrual">४ · खरा मिळकत नफा</string>
+    <string name="ground_truth">खरी माहिती (इंजिनपासून लपलेली)</string>
+    <string name="zero_shot_title">बिना-पाककृती अंदाज (खप दर)</string>
+    <string name="portion_drift">वाटा बदल %1$s: %2$s → %3$s (%4$s%%)</string>
+    <string name="zero_shot_note">BOM शिवाय: खप दर नोंदवलेल्या खप आणि विक्रीतूनच काढले.</string>
+    <string name="cogs_title">BOM शिवाय लागत (COGS)</string>
+    <string name="cogs_components">घटक: %1$s</string>
+    <string name="stockcount_title">साठा मोजणी (तुम्ही खरोखर जे पाहता)</string>
+    <string name="stockcount_hint">कोणतीही संख्या कमी करून कमतरता नोंदवा — इंजिन ती सडणे, चोरी किंवा खाजगी खप या संभाव्यता वितरणात वाटते.</string>
+    <string name="counted_label">%1$s मोजले</string>
+    <string name="loss_title">नुकसान वाटप</string>
+    <string name="loss_line">अपेक्षित %1$s, मोजले %2$s, नुकसान %3$s — %4$s</string>
+    <string name="cause_spoilage">सडणे</string>
+    <string name="cause_theft">चोरी</string>
+    <string name="cause_personal">खाजगी खप</string>
+    <string name="loss_posted">नोंद %1$s · %2$s</string>
+    <string name="accrual_title">खरा मिळकत नफा</string>
+    <string name="ci_band">९०%% विश्वास अंतर %1$s – %2$s</string>
+    <string name="cash_on_hand">स्थगित रोख: %1$s</string>
+    <string name="receivables_line">देयके (अप्रत्यक्ष उधार): %1$s</string>
+    <string name="cash_profit_line">रोख नफा: %1$s</string>
+    <string name="accrual_revenue_line">मिळकत उत्पन्न: %1$s</string>
+    <string name="true_cogs_line">खरी लागत: %1$s</string>
+    <string name="attributed_losses_line">वाटलेला नुकसान: %1$s</string>
+    <string name="accrual_note">मिळकत नफा उधारी विक्री (देयके), अंदाजित खपेतून खरी लागत आणि वाटलेला नुकसान लक्षात घेतो. रोख या तिन्हीकडे दुर्लक्ष करतो.</string>
+    <string name="status_seeded">%1$d दिवस तयार: %2$d प्लेट, उत्पन्न %3$s</string>
+    <string name="status_burn">खप दर काढले — BOM शिवाय</string>
+    <string name="status_cogs">खप × किमतीवर मोंटे-कार्लो लागत अंदाज</string>
+    <string name="status_loss">नोंदवनलेला नुकसान सडणे/चोरी/खाजगीत वाटला</string>
+    <string name="status_accrual">खरा मिळकत नफा काढला</string>
+
+    <!-- Sync -->
+    <string name="sync_title">सिंक</string>
+    <string name="sync_status">नोड %1$s · स्थानिक लॉगमध्ये %2$d CRDT ऑप्स. विलीनीकरण हे ऑप-लॉगचे क्रमरहित मिलन आहे — क्रम महत्त्वाचा नाही.</string>
+    <string name="chaos_title">घड्याळ-विक्षोभ चाचणी</string>
+    <string name="chaos_desc">३ कुटुंबी डिव्हाइस ज्यांचे घड्याळ १९७० मध्ये रीसेट होते, ९० दिवस पुढे उडी मारते आणि मागे सरकते — नंतर त्यांचे ऑप-लॉग विलीन केले जातात.</string>
+    <string name="run_chaos">विक्षोभ चाचणी चालवा</string>
+    <string name="chaos_result">एकात्म=%1$s · संतुलित=%2$s · सर्वत्र तोच विजेता=%3$s · %4$d ऑप्स · %5$d घड्याळ विक्षोभ सहन</string>
+    <string name="bridge_title">ऑप-लॉग हस्तांतरण (क्लिपबोर्ड पूल)</string>
+    <string name="bridge_desc">खऱ्या डिव्हाइसवर ब्लूटूथ; एम्युलेटरवर क्लिपबोर्द्वारे ऑप-लॉग दुसऱ्या ॲपमध्ये पाठवा — दोन्ही त्याच CRDT विलीनीकरण मार्गाने जातात.</string>
+    <string name="export_ops">ऑप्स निर्यात करा</string>
+    <string name="import_merge">आयात व विलीन</string>
+    <string name="bt_title">ब्लूटूथ सिंक (खरी डिव्हाइस)</string>
+    <string name="grant_bt">ब्लूटूथ परवानगी द्या</string>
+    <string name="start_server">सर्व्हर सुरू</string>
+    <string name="stop">थांबा</string>
+    <string name="connect_sync">जोडा आणि सिंक करा</string>
+    <string name="no_bonded">पेअर केलेली डिव्हाइस नाहीत. सिस्टम सेटिंग्समध्ये दुसरे डिव्हाइस जोडा.</string>
+    <string name="log_title">लॉग</string>
+
+    <!-- Eval -->
+    <string name="eval_title">मूल्यमापन</string>
+    <string name="eval_desc">खरी माहिती असलेला विक्षोभ महिना संपूर्ण संभाव्यता साखळीतून पुन्हा चालवून गुण देते: तिहेरी-मोजणीशिवाय फ्यूजन, खप/लागत/नफा CI कव्हरेज, नुकसान वाटप, घड्याळ-विक्षोभ CRDT एकात्मता, दुहेरी-नोंद संतुलन. लक्षात घ्या: यामुळे स्थानिक डेटा रीसेट होतो.</string>
+    <string name="run_eval">पूर्ण मूल्यमापन चालवा</string>
+    <string name="running">चालू आहे…</string>
+    <string name="eval_chain">मूल्यमापन साखळी: कच्च्या मालाची खप → अंदाजित नुकसान → निकाली उधारी → खरा मिळकत नफा</string>
+
+    <!-- Capture -->
+    <string name="capture_title">पुरावा कॅप्चर करा</string>
+    <string name="capture_status">सर्व प्रक्रिया डिव्हाइसवर — या ॲपमध्ये इंटरनेट परवानगीच नाही.</string>
+    <string name="noise_title">परिसरातील आवाज गेट</string>
+    <string name="noise_desc">आवाज पुराव्याचे वजन: %1$d dBFS आणि वर बोलणे वाहतुकीत बुडलेले समजले जाते (८५ dB प्रकरण).</string>
+    <string name="start_meter">मीटर सुरू</string>
+    <string name="stop_meter">मीटर थांबा</string>
+    <string name="too_noisy">खूप आवाज: आवाज पुराव्याचे वजन कमी होईल</string>
+    <string name="clear_enough">बोलण्यायोग्य स्पष्ट</string>
+    <string name="stt_title">ऑफलाइन हिंदी आवाज (Vosk, डिव्हाइसवर)</string>
+    <string name="listening">ऐकत आहे…</string>
+    <string name="heard">ऐकले: “%1$s”</string>
+    <string name="model_missing">Vosk मॉडेल बसवलेले नाही. एकदाची ऑनलाइन सेटअप: जोडलेल्या मशीनवरून alphacephei.com/vosk/models वरून vosk-model-small-hi-0.22 डाउनलोड करा आणि इथे उघडा:</string>
+    <string name="model_missing_after">त्यानंतर ओळख कायमची ऑफलाइन राहते.</string>
+    <string name="start_listening">ऐकणे सुरू</string>
+    <string name="stop_listening">ऐकणे थांबा</string>
+    <string name="ocr_title">पावती/खाते OCR (ML Kit, डिव्हाइसवर)</string>
+    <string name="ocr_desc">घुटमळलेल्या, तेलकट कागदासाठी ग्रेस्केल+कॉन्ट्रास्ट प्रीप्रोसेसिंग; लॅटिन+देवनागरी ओळखकर्ते एकत्र चालतात.</string>
+    <string name="pick_photo">पावतीचा फोटो निवडा</string>
+    <string name="camera_title">कॅमेरा कॅप्चर (हस्तलिखित खाती)</string>
+    <string name="grant_camera">कॅमेरा परवानगी द्या</string>
+    <string name="capture_ocr">कॅप्चर &amp; OCR</string>
+    <string name="sms_title">उशीरा येणारे SMS</string>
+    <string name="sms_desc">येणारा प्रत्येक SMS रिसीव्हर निष्क्रियपणे साठवतो; ॲप बंद असताना चुकलेले SMS इनबॉक्समधून भरा.</string>
+    <string name="grant_sms">SMS परवानगी द्या</string>
+    <string name="import_sms">अलीकडील इनबॉक्स SMS आयात</string>
+    <string name="importing">आयात सुरू…</string>
+    <string name="grant_mic">मायक्रोफोन परवानगी द्या</string>
+    <string name="error_prefix">त्रुटी: %1$s</string>
+</resources>

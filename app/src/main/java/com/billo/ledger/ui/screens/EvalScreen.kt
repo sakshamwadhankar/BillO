@@ -24,9 +24,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.billo.ledger.BillOApplication
+import com.billo.ledger.R
 import com.billo.ledger.eval.EvaluationHarness
 import kotlinx.coroutines.launch
 
@@ -45,11 +47,9 @@ fun EvalScreen() {
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Text("Evaluation", style = MaterialTheme.typography.headlineSmall)
+        Text(stringResource(R.string.eval_title), style = MaterialTheme.typography.headlineSmall)
         Text(
-            "Replays a ground-truthed chaos month through the whole probabilistic chain and scores it: " +
-                "fusion without triple-counting, burn-rate / COGS / profit CI coverage, loss attribution, " +
-                "hostile-clock CRDT convergence, double-entry balance. Note: this resets the local data.",
+            stringResource(R.string.eval_desc),
             style = MaterialTheme.typography.bodySmall,
         )
 
@@ -65,7 +65,7 @@ fun EvalScreen() {
                     }
                 }
             },
-        ) { Text(if (busy) "Running…" else "Run full evaluation") }
+        ) { Text(if (busy) stringResource(R.string.running) else stringResource(R.string.run_eval)) }
         if (busy) LinearProgressIndicator(Modifier.fillMaxWidth())
 
         report?.let { r ->
@@ -94,7 +94,7 @@ fun EvalScreen() {
                     }
                     Spacer(Modifier.height(4.dp))
                     Text(
-                        "Evaluation chain: Raw Material Burn → Inferred Wastage → Reconciled Credit → True Accrual Profit",
+                        stringResource(R.string.eval_chain),
                         style = MaterialTheme.typography.labelSmall,
                     )
                 }
