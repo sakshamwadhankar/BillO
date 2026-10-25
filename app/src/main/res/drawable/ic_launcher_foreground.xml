@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- stylised rupee ledger glyph -->
+    <path
+        android:fillColor="#FFB300"
+        android:pathData="M40,30h28v7h-9c2,2 3.5,4.5 4,7h5v7h-5c-1,6 -5.5,10.5 -12,11.5L61,74h-9l-12,-14v-6h8c4,0 6.5,-2 7.4,-5H40v-7h15.3C54.4,39.7 52.4,38 49.5,37H40z" />
+    <path
+        android:fillColor="#26A69A"
+        android:pathData="M30,80h48v5h-48z" />
+</vector>
